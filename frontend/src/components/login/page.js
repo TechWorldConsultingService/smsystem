@@ -9,7 +9,7 @@ import Logo from '../logo/page';
 import { FaUser } from 'react-icons/fa';
 import { RiLockPasswordFill } from 'react-icons/ri';
 import { useFormik } from 'formik';
-import * as Yup from 'yup';
+
 import { useRouter } from 'next/navigation';
 import {loginSchema} from '../../constant/schema'
 
@@ -61,14 +61,14 @@ const Login = () => {
             <div className="flex flex-col w-full rounded-sm overflow-hidden">
               <Input
                 type="email"
-                label="Email"
+                placeholder='Email'
                 variant="bordered"
                 id="email"
                 name="email"
                 onChange={formik.handleChange}
                 value={formik.values.email}
                 fullWidth
-                startContent={<FaUser className="text-blue-400" />}
+                startContent={<FaUser className="text-blue-400 mr-3" />}
               />
               {formik.touched.email && formik.errors.email && (
                 <div className="p-1 px-2 text-red-500 text-sm mt-1">{formik.errors.email}</div>
@@ -76,7 +76,7 @@ const Login = () => {
             </div>
             <div className="flex flex-col w-full rounded-md overflow-hidden align-items-center">
               <Input
-                label="Password"
+                placeholder='Password'
                 variant="bordered"
                 id="password"
                 name="password"
