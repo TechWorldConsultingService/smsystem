@@ -9,10 +9,10 @@ const Logo = () => {
          <div className='w-20 '>
       <Link href="/">
        <Image 
-       height={100}
-      width={80}
+       height={180}
+      width={200}
       alt="Logo"
-      src="/logo.jpg"
+      src="/logo.png"
     /></Link></div>
     </div>
   )
