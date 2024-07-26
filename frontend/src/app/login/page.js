@@ -5,7 +5,7 @@ import { EyeFilledIcon } from './EyeFilledIcon';
 import { EyeSlashFilledIcon } from './EyeSlashFilledIcon';
 import Link from 'next/link';
 import Image from 'next/image';
-import Logo from '../logo/page';
+import Logo from '../../components/logo/page';
 import { FaUser } from 'react-icons/fa';
 import { RiLockPasswordFill } from 'react-icons/ri';
 import { useFormik } from 'formik';
