@@ -56,7 +56,43 @@ export default function RootLayout({ children }) {
                     subSideBar: []
                 }
             ]
-        }
+        },
+        {
+            page: "Calendar",
+            image: "lnr lnr-calendar-full",
+            link: "/calendar",
+            level: 3,
+            subSideBar: []
+        },
+        {
+            page: "Class",
+            image: "lnr lnr-book",
+            link: "/studentclass",
+            level: 3,
+            subSideBar: [
+                {
+                    page: "Science",
+                    image: "",
+                    link: "/index/ListMyRequest",
+                    level: 0,
+                    subSideBar: []
+                },
+                {
+                    page: "Math",
+                    image: "",
+                    link: "/index/ListMyRequest",
+                    level: 0,
+                    subSideBar: []
+                },
+                {
+                    page: "Computer",
+                    image: "",
+                    link: "/index/ListMyRequest",
+                    level: 0,
+                    subSideBar: []
+                },
+            ]
+        },
     ];
 
     const showSidebar = pathname !== '/login';

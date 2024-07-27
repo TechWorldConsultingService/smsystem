@@ -33,9 +33,9 @@ body {
     cursor: pointer;
   }
   
-  .mm-sidebar > li {
+  /* .mm-sidebar > li {
   }
-  
+   */
     .mm-sidebar > li:hover {
         cursor: pointer;
     }
