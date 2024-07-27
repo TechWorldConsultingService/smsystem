@@ -21,7 +21,7 @@ const NavMenu = () => {
     };
 
     const handleProfile = () => {
-        router.push('/index/UserProfile');
+        router.push('/userProfile');
     };
 
     return (
