@@ -12,7 +12,7 @@ import './linearicon.css';
 import './bootstrap.css';
 import { Toaster } from "react-hot-toast";
 import ReduxProvider from "@/redux/ReduxProvider";
-import { useSelector } from 'react-redux';
+
 
 
 export default function RootLayout({ children }) {
@@ -23,7 +23,7 @@ export default function RootLayout({ children }) {
         setExpand(!expand);
     };
 
-    const {role} = useSelector(state=>state.user)
+    
     
     const accessModules = {
         "master":[
@@ -101,7 +101,7 @@ export default function RootLayout({ children }) {
     const showSidebar = pathname !== '/login';
 
     const userDetails = {
-        role: role // For example purposes; replace with actual user role logic
+        role: 'student' // For example purposes; replace with actual user role logic
     };
 
     return (
