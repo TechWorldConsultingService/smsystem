@@ -9,13 +9,15 @@ import Logo from '../../components/logo/page';
 import { FaUser } from 'react-icons/fa';
 import { RiLockPasswordFill } from 'react-icons/ri';
 import { useFormik } from 'formik';
-
 import { useRouter } from 'next/navigation';
 import {loginSchema} from '../../constant/schema'
-
-
+import toast from 'react-hot-toast';
+import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { setLoginDetails } from '../../redux/reducerSlices/userSlice';
 
 const Login = () => {
+  const dispatch = useDispatch();
   const [isVisible, setIsVisible] = useState(false);
   const router = useRouter();
 
@@ -23,21 +25,54 @@ const Login = () => {
 
   const formik = useFormik({
     initialValues: {
-      email: '',
+      username: '',
       password: '',
     },
     validationSchema: loginSchema,
     onSubmit: (values) => {
       // Mock authentication
-      if (values.email === 'admin@example.com' && values.password === 'password') {
-        // Store token in localStorage (for demonstration purposes)
-        localStorage.setItem('token', 'fake-jwt-token');
-        router.push('/dashboard');
-      } else {
-        alert('Invalid credentials');
-      }
+      // if (values.email === 'admin@example.com' && values.password === 'password') {
+      //   // Store token in localStorage (for demonstration purposes)
+      //   localStorage.setItem('token', 'fake-jwt-token');
+      //   router.push('/dashboard');
+      // } else {
+      //   alert('Invalid credentials');
+      // }
+
+      loginUser(values)
     },
   });
+
+
+  const loginUser = async(values)=>{
+    try{
+      const response = await axios.post('http://localhost:8000/api/login/', values);
+      router.push('/studentdashboard')
+      const data = await response.data
+      
+      if(response.status == 200) {
+        const successMessage = data.msg || 'Login sucessful';
+        toast.success(successMessage);
+        dispatch(setLoginDetails(data))
+      //   if (data.user.role=='student'){
+      //     router.push('/studentdashboard')
+      //   }else if (data.user.role ......=='teacher'){
+      //     router.push('/teacherdashboard')
+      //   }else if (data.user.role == 'master'){
+      //     router.push('/masterdashboard')
+      //   }else {
+      //   router.push('/principaldashboard)
+       //   }
+      }else {
+        const errorMessage = data.msg || 'Error login.';
+        toast.error(errorMessage);
+    }
+
+    } catch (error) {
+        toast.error('Network error or server is down');
+    }
+ 
+    }
 
   return (
     <div className="flex flex-col md:flex-row w-full h-screen">
@@ -60,18 +95,18 @@ const Login = () => {
           <div className="space-y-4">
             <div className="flex flex-col w-full rounded-sm overflow-hidden">
               <Input
-                type="email"
-                placeholder='Email'
+                type="username"
+                placeholder='User Name'
                 variant="bordered"
-                id="email"
-                name="email"
+                id="username"
+                name="username"
                 onChange={formik.handleChange}
-                value={formik.values.email}
+                value={formik.values.username}
                 fullWidth
                 startContent={<FaUser className="text-blue-400 mr-3" />}
               />
-              {formik.touched.email && formik.errors.email && (
-                <div className="p-1 px-2 text-red-500 text-sm mt-1">{formik.errors.email}</div>
+              {formik.touched.username && formik.errors.username && (
+                <div className="p-1 px-2 text-red-500 text-sm mt-1">{formik.errors.username}</div>
               )}
             </div>
             <div className="flex flex-col w-full rounded-md overflow-hidden align-items-center">
