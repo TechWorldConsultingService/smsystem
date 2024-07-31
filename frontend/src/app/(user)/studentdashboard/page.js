@@ -16,7 +16,7 @@ const MyRequest = ({ loadingToggle }) => {
             <div className="material-work-desk-new bg-white">
             <div className="p-2 bg-white">
 
-                Hi 
+             this is student dashboard
                 </div>
                 
             </div>
