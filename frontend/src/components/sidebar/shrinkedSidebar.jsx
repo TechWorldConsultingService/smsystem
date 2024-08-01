@@ -2,8 +2,22 @@
 import React, { useState } from "react";
 import './sidebar.css';
 import Link from 'next/link';  // Correct import
+import { useSelector } from "react-redux";
+
 
 const SidebarData = (props) => {
+
+    const role = useSelector(state=>state.user.role)
+
+    useEffect(() => {
+        props.onRoleChange(role);
+    }, [role]);
+
+    useEffect(() => {
+        // Update user role when the component mounts or userRole changes
+    }, [userRole]);
+
+    
     const [storeData, setData] = useState({
         display: false,
         pageName: '',

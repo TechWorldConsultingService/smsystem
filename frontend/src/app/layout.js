@@ -1,6 +1,6 @@
 // app/layout.js
 'use client';
-import React from 'react';
+import React, { useState } from 'react';
 import Head from 'next/head';
 import { usePathname } from 'next/navigation';
 import NavMenu from '../components/NavMenu';
@@ -16,6 +16,7 @@ import ReduxProvider from "@/redux/ReduxProvider";
 
 
 export default function RootLayout({ children }) {
+    const [userRole, setUserRole] = useState('master')
     const pathname = usePathname();
     const [expand, setExpand] = React.useState(true);
 
@@ -100,10 +101,6 @@ export default function RootLayout({ children }) {
 
     const showSidebar = pathname !== '/login';
 
-    const userDetails = {
-        role: 'student' // For example purposes; replace with actual user role logic
-    };
-
     return (
         <ReduxProvider>
         <html lang="en">
@@ -116,13 +113,13 @@ export default function RootLayout({ children }) {
                     <div className="row">
                         {showSidebar && (
                             <>
-                           { accessModules[userDetails?.role] && ( 
+                           { accessModules[userRole] && ( 
                                 <>
                                 <div className="extraa gradient" style={{ display: expand ? 'none' : 'flex' }}>
-                                    <ExpandedSideBar shrink={resizeSideBar} accessModules={accessModules[userDetails.role]} />
+                                    <ExpandedSideBar shrink={resizeSideBar} accessModules={accessModules[userRole]} />
                                 </div>
                                 <div className="gradient" style={{ width: '120px', display: expand ? 'flex' : 'none' }}>
-                                    <SidebarData expand={resizeSideBar} accessModules={accessModules[userDetails.role]} />
+                                    <SidebarData expand={resizeSideBar} accessModules={accessModules[userRole]} />
                                 </div>
                                 </>
                             )

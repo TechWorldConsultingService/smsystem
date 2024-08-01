@@ -47,22 +47,22 @@ const Login = () => {
   const loginUser = async(values)=>{
     try{
       const response = await axios.post('http://localhost:8000/api/login/', values);
-      router.push('/studentdashboard')
+      // router.push('/studentdashboard')
       const data = await response.data
-      
+      console.log(JSON.stringify(data))
       if(response.status == 200) {
         const successMessage = data.msg || 'Login sucessful';
         toast.success(successMessage);
         dispatch(setLoginDetails(data))
-      //   if (data.user.role=='student'){
-      //     router.push('/studentdashboard')
-      //   }else if (data.user.role ......=='teacher'){
-      //     router.push('/teacherdashboard')
-      //   }else if (data.user.role == 'master'){
-      //     router.push('/masterdashboard')
-      //   }else {
-      //   router.push('/principaldashboard)
-       //   }
+            if (data.role=='student'){
+           router.push('/studentdashboard')
+          }else if (data.role =='teacher'){
+          router.push('/teacherdashboard')
+          }else if (data.role == 'master'){
+           router.push('/masterdashboard')
+          }else {
+         router.push('/principaldashboard')
+           }
       }else {
         const errorMessage = data.msg || 'Error login.';
         toast.error(errorMessage);
