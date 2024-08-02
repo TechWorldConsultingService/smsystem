@@ -3,7 +3,9 @@ import React, { useState } from "react";
 import './sidebar.css';
 import Link from 'next/link';  // Correct import
 
+
 const SidebarData = (props) => {
+
     const [storeData, setData] = useState({
         display: false,
         pageName: '',
