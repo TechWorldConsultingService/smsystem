@@ -49,7 +49,7 @@ const Login = () => {
       const response = await axios.post('http://localhost:8000/api/login/', values);
       // router.push('/studentdashboard')
       const data = await response.data
-      console.log(JSON.stringify(data))
+ 
       if(response.status == 200) {
         const successMessage = data.msg || 'Login sucessful';
         toast.success(successMessage);

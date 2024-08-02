@@ -1,13 +1,14 @@
 // app/page.js
 'use client'
-import { useEffect } from 'react';
+import  { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 //import CookieService from '../service/cookieService';
-import RootLayout from './layout';
+
 
 //const cookieService = CookieService.getService();
 
 export default function HomePage() {
+
     const router = useRouter();
     //const isAuthenticated = cookieService.getAccessToken();
 
@@ -20,11 +21,13 @@ export default function HomePage() {
     // }
 
     return (
-        <RootLayout>
             <div>
+<div className="col p-0" style={{ marginTop: '5px', background: '#f2f2f2', overflowX: 'auto' }}>
+                        <div style={{ padding:'16px' }} className="" ></div>
+                
                 <h1>Welcome to the Home Page</h1>
                 {/* Add more content here */}
-            </div>
-        </RootLayout>
+            </div></div>
+    
     );
 }
