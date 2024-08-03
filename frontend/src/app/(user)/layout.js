@@ -3,11 +3,11 @@ import NavLayout from '@/components/Layout'
 import React from 'react'
 
 
-const layout = () => {
+const layout = ({children}) => {
   return (
     <div>
-        <NavLayout/>
-
+    <div><NavLayout/></div> 
+     <div className='pl-120'>{children}</div>
     </div>
   )
 }

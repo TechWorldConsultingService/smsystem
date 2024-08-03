@@ -5,19 +5,16 @@ import ExpandedSideBar from './sidebar/expandedSidebar';
 import SidebarData from './sidebar/shrinkedSidebar';
 import { usePathname } from 'next/navigation';
 import { useSelector } from "react-redux";
+import '../app/globals.css'
 
 
 const NavLayout = () => {
   const userRole = useSelector(state=>state.user.role)
-  // const userRole = 'student'
   const pathname = usePathname();
   const [expand, setExpand] = React.useState(true);
   const resizeSideBar = () => {
     setExpand(!expand);
 };
-
-const showSidebar = pathname !== '/login';
-
 
 const accessModules = {
   "master":[
@@ -95,11 +92,8 @@ const accessModules = {
 
   return (
     <div>
-      {showSidebar && <NavMenu />}
-                <div className="container-fluid material-content-pannel">
-                    <div className="row">
-                        {showSidebar && (
-                            <>
+       <NavMenu/>
+        <div>
                            { accessModules[userRole] && ( 
                                 <>
                                 <div className="extraa gradient" style={{ display: expand ? 'none' : 'flex' }}>
@@ -111,11 +105,8 @@ const accessModules = {
                                 </>
                             )
                            }
-                            </>
-                        )}
-
-</div></div>
-    </div>
+                       </div>     
+</div>
   );
 };
 export default NavLayout;
