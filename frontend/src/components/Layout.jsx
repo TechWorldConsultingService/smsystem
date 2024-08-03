@@ -79,8 +79,8 @@ const accessModules = {
   { page: "Reports",image: "lnr lnr-calendar-full",link: "/reports",level: 3,subSideBar: []},
   { page: "Request", image: "lnr-layers", link: "", level: 2,
       subSideBar: [
-                       { page: "All Request", image: "", link: "/index/allRequest", level: 0, subSideBar: [] },
-                       {  page: "My Request",image: "",link: "/index/ListMyRequest",level: 0,subSideBar: []},
+                       { page: "Students Leave Request", image: "", link: "/studentleave", level: 0, subSideBar: [] },
+                       {  page: "Teacher Leave Request",image: "",link: "/index/ListMyRequest",level: 0,subSideBar: []},
                       {page: "User Request",image: "",link: "/index/ListManagerRequest",level: 0,subSideBar: []}
                    ]
   },
