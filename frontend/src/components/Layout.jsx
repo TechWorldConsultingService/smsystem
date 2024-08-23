@@ -24,6 +24,8 @@ const accessModules = {
   { page: "Add",image: "lnr lnr-calendar-full",link: "/reports",level: 3,subSideBar: []},
   ],
 
+
+
 "student":[
   { page: "Dashboard", image: "lnr-pie-chart", link: "/dashboard", level: 1,subSideBar: [] },
   { page: "Calendar",image: "lnr lnr-calendar-full",link: "/calendar",level: 3,subSideBar: []},
@@ -49,30 +51,46 @@ const accessModules = {
   { page: "Leave",image: "lnr lnr-calendar-full",link: "/calendar",level: 4,subSideBar: []},
   ],
 
+
+
+
   "teacher":[
   { page: "Dashboard", image: "lnr-pie-chart", link: "/dashboard", level: 1,subSideBar: [] },
-  { page: "Calendar",image: "lnr lnr-calendar-full",link: "/calendar",level: 3,subSideBar: []},
+  { page: "Calendar",image: "lnr lnr-calendar-full",link: "/calendar",level: 2,subSideBar: []},
   {
       page: "Class",
       image: "lnr lnr-book",
       link: "/studentclass",
-      level: 4,
+      level: 3,
       subSideBar: [
                        { page: "Math",image: "",link: "/index/ListMyRequest",level: 0,subSideBar: []},
                        {page: "Computer",image: "",link: "/index/ListMyRequest",level: 0,subSideBar: []},
                    ]
   },
-  { page: "Reports",image: "lnr lnr-calendar-full",link: "/reports",level: 3,subSideBar: []},
-  { page: "Request", image: "lnr-layers", link: "", level: 2,
+  { 
+    page: "Leave",
+    image: "lnr lnr-calendar-full",
+    link: "/calendar",
+    level: 4,
+    subSideBar: [
+      { page: "My Students Leave Request", image: "", link: "/Leave/mystudentleave", level: 0, subSideBar: [] },
+      { page: "Teacher Leave Request",image: "",link: "/Leave/teacherleave",level: 0,subSideBar: []},
+    ]
+  },
+  { page: "Request", image: "lnr-layers", link: "", level: 5,
       subSideBar: [
                        { page: "All Request", image: "", link: "/index/allRequest", level: 0, subSideBar: [] },
                        {  page: "My Request",image: "",link: "/index/ListMyRequest",level: 0,subSideBar: []},
                       {page: "User Request",image: "",link: "/index/ListManagerRequest",level: 0,subSideBar: []}
                    ]
   },
-  { page: "Attendence",image: "lnr lnr-calendar-full",link: "/reports",level: 3,subSideBar: []},
-  { page: "Leave",image: "lnr lnr-calendar-full",link: "/calendar",level: 4,subSideBar: []},
+  { page: "Attendence",image: "lnr lnr-calendar-full",link: "/reports",level: 6,subSideBar: []},
+
+  { page: "Reports",image: "lnr lnr-calendar-full",link: "/reports",level: 7,subSideBar: []},
   ],
+
+
+
   "principal":[
   { page: "Dashboard", image: "lnr-pie-chart", link: "/dashboard", level: 1,subSideBar: [] },
   { page: "Calendar",image: "lnr lnr-calendar-full",link: "/calendar",level: 3,subSideBar: []},
