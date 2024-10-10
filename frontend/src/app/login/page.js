@@ -15,6 +15,7 @@ import toast from 'react-hot-toast';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { setLoginDetails } from '../../redux/reducerSlices/userSlice';
+import Cookies from 'js-cookie';
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -35,10 +36,18 @@ const Login = () => {
     },
   });
 
+
   const loginUser = async (values) => {
     setLoading(true);
     try {
-      const response = await axios.post('http://localhost:8000/api/login/', values);
+      const response = await axios.post('http://localhost:8000/api/login/', values,{
+        headers: {
+          'X-CSRFToken': csrfToken,  // Include CSRF token in request headers
+        },
+        withCredentials: true,  // Ensures cookies are sent along with the request
+      });
+
+
       const data = await response.data;
 
       if (response.status === 200) {

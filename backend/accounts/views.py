@@ -6,10 +6,17 @@ from django.contrib.auth import authenticate, login, logout
 from .models import *
 from .serializers import LoginSerializer, LogoutSerializer, RegisterSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
-from rest_framework.permissions import IsAuthenticated
-
+from rest_framework.permissions import IsAuthenticated,AllowAny
+from rest_framework_simplejwt.authentication import JWTAuthentication
 # View for handling user login
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
+
+# @csrf_exempt
+@method_decorator(csrf_exempt, name='dispatch')
 class LoginAPIView(APIView):
+    authentication_classes = [JWTAuthentication]  # Use JWT instead of session auth
+    permission_classes = [AllowAny]
     def post(self, request):
         # Deserialize the request data using LoginSerializer
         serializer = LoginSerializer(data=request.data)
@@ -72,7 +79,12 @@ class LogoutAPIView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 # View for handling user registration
+from django.views.decorators.csrf import csrf_exempt
+@method_decorator(csrf_exempt, name='dispatch')
 class RegisterAPIView(APIView):
+    authentication_classes = [JWTAuthentication]  # Use JWT instead of session auth
+    permission_classes = [AllowAny]
+
     def post(self, request):
         # Deserialize the request data using RegisterSerializer
         serializer = RegisterSerializer(data=request.data)

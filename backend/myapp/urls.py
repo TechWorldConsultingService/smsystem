@@ -39,5 +39,3 @@ urlpatterns = [
     path('api/leave-applications/<int:pk>/', LeaveApplicationDetailView.as_view(), name='leave-application-detail'),  # Endpoint for retrieving details of a specific leave application by ID
     path('api/leave-applications/<int:pk>/delete/', LeaveApplicationDeleteView.as_view(), name='leave-application-delete'),  # Endpoint for deleting a specific leave application by ID
 ]
-
-
