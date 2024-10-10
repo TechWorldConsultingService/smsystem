@@ -5,18 +5,29 @@ from rest_framework import status
 from django.contrib.auth.models import User
 from .models import *
 from .serializers import *
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated,AllowAny
 from .permissions import *
 from django.contrib.auth import get_user_model
+from django.utils.decorators import method_decorator
+from rest_framework_simplejwt.authentication import JWTAuthentication
+
+
 
 User = get_user_model()
 
 # Renders the login page (HTML template)
+from django.views.decorators.csrf import csrf_exempt
+
+@csrf_exempt
 def login(request):
     return render(request, 'myapp/login.html')
 
 # View for handling teacher registration
+from django.views.decorators.csrf import csrf_exempt
+@method_decorator(csrf_exempt, name='dispatch')
 class RegisterTeacherView(APIView):
+    authentication_classes = [JWTAuthentication]  # Use JWT instead of session auth
+    permission_classes = [AllowAny]
     def post(self, request, format=None):
         # Determine if the request data is in JSON format or form-data
         if request.content_type == 'application/json':
@@ -56,7 +67,10 @@ class RegisterTeacherView(APIView):
             return Response(teacher_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 # View for handling principal registration
+@method_decorator(csrf_exempt, name='dispatch')
 class RegisterPrincipalView(APIView):
+    authentication_classes = [JWTAuthentication]  # Use JWT instead of session auth
+    permission_classes = [AllowAny]
     def post(self, request, format=None):
         # Determine if the request data is in JSON format or form-data
         if request.content_type == 'application/json':
@@ -95,9 +109,23 @@ class RegisterPrincipalView(APIView):
             return Response(principal_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 # View for handling student registration
+@method_decorator(csrf_exempt, name='dispatch')
 class RegisterStudentView(APIView):
+    authentication_classes = [JWTAuthentication]  # Use JWT instead of session auth
+    permission_classes = [IsAuthenticated, IsPrincipal]
+    # permission_classes = [AllowAny]
+
     def post(self, request, format=None):
-        # Determine if the request data is in JSON format or form-data
+        print(request.headers)
+        print(print(f"Authenticated user: {request.user}, Is Principal: {request.user.is_principal}"))
+        # Check if the user is authenticated and is a principal
+        if request.user.is_authenticated and request.user.is_principal:
+            print(f"Authenticated user: {request.user}, Is Principal: {request.user.is_principal}")
+        else:
+            return Response({"error": "You do not have permission to perform this action."}, status=status.HTTP_403_FORBIDDEN)
+
+        
+        # Determine if the request data is in JSON format or form-data        
         if request.content_type == 'application/json':
             # Handle JSON data
             user_data = request.data.get('user')
@@ -262,7 +290,7 @@ class StudentDeleteView(APIView):
         
 # API view to list all leave applications for the principal
 class TotalLeaveApplicationListView(APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsPrincipal]
 
     def get(self, request, format=None):
         """
