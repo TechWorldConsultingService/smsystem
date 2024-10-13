@@ -134,3 +134,12 @@ CORS_ALLOWED_ORIGINS = [
     'http://localhost:4000',
     'http://127.0.0.1:3000',
 ]
+
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost:3000',
+    'http://127.0.0.1:3000',
+    'http://localhost:4000',
+]
+
+CSRF_COOKIE_HTTPONLY = False  # Ensure the frontend can access it via JS
+CSRF_COOKIE_SAMESITE = 'Lax'  # Lax or Strict depending on your use case

@@ -10,13 +10,14 @@ urlpatterns = [
     path('dashboard/', admin.site.urls),  # URL for the Django admin dashboard
 
     # Login page URL
-    path('', views.login, name='login'),  # URL for the login page, mapped to the `login` view function
+    # path('', views.login, name='login'),  # URL for the login page, mapped to the `login` view function
+    path('api/login/', views.login, name='login'),  # URL for the login page, mapped to the `login` view function
 
     # API endpoints for user registration
     path('api/register/teacher/', RegisterTeacherView.as_view(), name='register-teacher'),  # URL for teacher registration API
     path('api/register/principal/', RegisterPrincipalView.as_view(), name='register-principal'),  # URL for principal registration API
     path('api/register/student/', RegisterStudentView.as_view(), name='register-student'),  # URL for student registration API
-
+    
      # API endpoints for user lists
     path('api/teachers/', TeacherListView.as_view(), name='teacher-list'),  # Endpoint for listing teachers
     path('api/principals/', PrincipalListView.as_view(), name='principal-list'),  # Endpoint for listing principals

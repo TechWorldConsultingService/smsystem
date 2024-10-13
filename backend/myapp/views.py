@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.contrib.auth import authenticate, login as auth_login
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -8,14 +9,84 @@ from .serializers import *
 from rest_framework.permissions import IsAuthenticated
 from .permissions import *
 from django.contrib.auth import get_user_model
+from django.utils import timezone
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
+import json
 
 User = get_user_model()
 
-# Renders the login page (HTML template)
+
+# def get_user_role(user):
+#     if user.is_principal:
+#         return "principal"
+#     elif user.is_teacher:
+#         return "teacher"
+#     elif user.is_master:
+#         return "master"
+#     elif user.is_student:
+#         return "student"
+#     return "unknown"
+def get_user_role(user):
+    if getattr(user, 'is_principal', False):
+        return "principal"
+    elif getattr(user, 'is_teacher', False):
+        return "teacher"
+    elif getattr(user, 'is_master', False):
+        return "master"
+    elif getattr(user, 'is_student', False):
+        return "student"
+    return "unknown"
+
+@csrf_exempt
 def login(request):
+    if request.method == "POST":
+        body = json.loads(request.body)
+        username = body.get('username')
+        password = body.get('password')
+        
+        print(f"Username: {username}, Password: {password}")
+        user = authenticate(request, username=username, password=password)
+        print(user)
+  
+        if user is not None:
+            auth_login(request,user)
+            #role-base redirection or success message
+            role = get_user_role(user)
+
+            if role == 'principal':
+                #redirect to principal dashboard
+                return JsonResponse({
+                    'msg':  'Login Successful',
+                    'role': role,
+                    'redirect': '/principaldashboard'
+                })
+            elif role == 'student':
+                #redirect to student dashboard
+                return JsonResponse({
+                    'msg':  'Login Successful',
+                    'role': role,
+                    'redirect': '/studentdashboard'
+                })
+            elif role == 'teacher':
+                #redirect to teacher dashboard
+                return JsonResponse({
+                    'msg':  'Login Successful',
+                    'role': role,
+                    'redirect': '/teacherdashboard'
+                })
+            else:
+                return JsonResponse({
+                    'msg': 'Login Successful',
+                    'role':role,
+                    'redirect':'/masterdashboard'
+                },status=200)            
+        else:
+            return render(request,'myapp/login.html')
     return render(request, 'myapp/login.html')
 
 # View for handling teacher registration
+# @csrf_exempt
 class RegisterTeacherView(APIView):
     def post(self, request, format=None):
         # Determine if the request data is in JSON format or form-data
@@ -50,6 +121,8 @@ class RegisterTeacherView(APIView):
         if teacher_serializer.is_valid():
             # Save the teacher instance and return success response
             teacher = teacher_serializer.save()
+            teacher.user.is_teacher = True
+
             return Response(teacher_serializer.data, status=status.HTTP_201_CREATED)
         else:
             # Return error response if validation fails
@@ -89,6 +162,8 @@ class RegisterPrincipalView(APIView):
         if principal_serializer.is_valid():
             # Save the principal instance and return success response
             principal = principal_serializer.save()
+            principal.user.is_principal = True
+
             return Response(principal_serializer.data, status=status.HTTP_201_CREATED)
         else:
             # Return error response if validation fails
@@ -130,6 +205,7 @@ class RegisterStudentView(APIView):
         if student_serializer.is_valid():
             # Save the student instance and return success response
             student = student_serializer.save()
+            student.user.is_student = True
             return Response(student_serializer.data, status=status.HTTP_201_CREATED)
         else:
             # Return error response if validation fails

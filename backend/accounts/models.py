@@ -8,5 +8,3 @@ class CustomUser(AbstractUser):
     is_principal = models.BooleanField(default=False)
     is_teacher = models.BooleanField(default=False)
     is_student = models.BooleanField(default=False)
-
-    
